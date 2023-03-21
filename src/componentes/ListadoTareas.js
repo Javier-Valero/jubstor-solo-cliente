@@ -5,7 +5,7 @@ import { Box, Grid, Typography, IconButton, Icon, Tooltip } from "@mui/material"
 
 const ListadoTareas = () => {
     // Declaramos o importamos las variables y funciones necesarias 
-    const { bearer, compruebaErrorSesion, excepcionSesion, handleAbrirModalDeleteTarea, handleCerrarModalDeleteTarea, handleEdit, miscolumnas, user, setNombrePantalla, idtareaBorrar } = useContextoApp();
+    const { bearer, compruebaErrorSesion, excepcionSesion, handleAbrirModalDeleteTarea, handleCerrarModalDeleteTarea, handleEdit, miscolumnas, user, setNombrePantalla, idtareaBorrar, server_url } = useContextoApp();
     setNombrePantalla('Listado de tareas')
     const [tareas, setTareas] = useState([]);
 
@@ -13,7 +13,7 @@ const ListadoTareas = () => {
     const cargaTareas = async () => {
         // Hacemos la solicitud al servidor
         try {
-            const response = await fetch("http://localhost:4000/tareas/" + user.idusuario,
+            const response = await fetch(`${server_url}/tareas/${user.idusuario}`,
                 {
                     method: "GET",
                     headers: { 'Authorization': bearer },
@@ -32,7 +32,7 @@ const ListadoTareas = () => {
     const confirmarBorrarTareaClicked = async () => {
         // Hacemos la solicitud al servidor
         try {
-            const response = await fetch(`http://localhost:4000/tareas/${idtareaBorrar}`, {
+            const response = await fetch(`${server_url}/tareas/${idtareaBorrar}`, {
                 method: "DELETE",
                 headers: { 'Authorization': bearer },
                 credentials: 'same-origin',

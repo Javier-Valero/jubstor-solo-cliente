@@ -5,7 +5,7 @@ import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Cir
 
 const FormularioTareas = () => {
     // Declaramos o importamos las variables y funciones necesarias 
-    const { bearer, compruebaErrorSesion, excepcionSesion, navigate, location, user, setNombrePantalla } = useContextoApp();
+    const { bearer, compruebaErrorSesion, excepcionSesion, navigate, location, user, setNombrePantalla, server_url } = useContextoApp();
     const from = location.state?.from?.pathname || "/";
     const params = useParams();
     const [tarea, setTarea] = useState({
@@ -29,7 +29,7 @@ const FormularioTareas = () => {
     const cargaTarea = async (idtarea) => {
         // Hacemos la solicitud al servidor
         try {
-            const response = await fetch("http://localhost:4000/tareas/tarea/" + idtarea,
+            const response = await fetch(`${server_url}/tareas/tarea/${idtarea}`,
                 {
                     method: "GET",
                     headers: { 'Authorization': bearer },
@@ -53,7 +53,7 @@ const FormularioTareas = () => {
         try {
             if (editando) {
                 const response = await fetch(
-                    "http://localhost:4000/tareas/tarea/" + params.idtarea,
+                    `${server_url}/tareas/tarea/${params.idtarea}`,
                     {
                         method: "PUT",
                         headers: { "Content-Type": "application/json", 'Authorization': bearer },
@@ -64,7 +64,7 @@ const FormularioTareas = () => {
                 await response.json();
                 compruebaErrorSesion(response)
             } else {
-                const response = await fetch("http://localhost:4000/tareas", {
+                const response = await fetch(`${server_url}/tareas`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json", 'Authorization': bearer },
                     body: JSON.stringify(tarea),

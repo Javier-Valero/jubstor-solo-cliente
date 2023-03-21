@@ -5,7 +5,7 @@ import { Box, Button, CircularProgress, Checkbox, FormControlLabel, Grid, Icon, 
 
 const Login = () => {
     // Declaramos o importamos las variables y funciones necesarias 
-    const { navigate, location, setAuth, setNombrePantalla } = useContextoApp();
+    const { navigate, location, setAuth, setNombrePantalla, server_url } = useContextoApp();
     setNombrePantalla('Login')
     const [usuario, setUsuario] = useState({
         email: "",
@@ -36,7 +36,7 @@ const Login = () => {
         usuario.recuerdame = recuerdame
         // Hacemos la solicitud al servidor
         try {
-            const response = await fetch("http://localhost:4000/login", {
+            const response = await fetch(`${server_url}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: 'same-origin',

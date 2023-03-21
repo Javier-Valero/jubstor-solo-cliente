@@ -5,7 +5,7 @@ import { Box, Button, CircularProgress, Grid, Icon, IconButton, InputAdornment, 
 
 const Registro = () => {
     // Declaramos o importamos las variables y funciones necesarias 
-    const { navigate, setAuth, setNombrePantalla } = useContextoApp();
+    const { navigate, setAuth, setNombrePantalla, server_url } = useContextoApp();
     setNombrePantalla('Registro')
     const [usuario, setUsuario] = useState({
         nombre: "",
@@ -37,7 +37,7 @@ const Registro = () => {
         const mis_datos = eliminarEspacios(usuario)
         // Hacemos la solicitud al servidor
         try {
-            const response = await fetch("http://localhost:4000/registro", {
+            const response = await fetch(`${server_url}/registro`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: 'same-origin',

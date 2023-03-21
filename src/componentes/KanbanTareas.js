@@ -7,14 +7,14 @@ import Columna from "./Columna";
 
 const KanbanTareas = () => {
     // Declaramos o importamos las variables y funciones necesarias 
-    const { bearer, compruebaErrorSesion, excepcionSesion, handleCerrarModalDeleteTarea, miscolumnas, user, setNombrePantalla, idtareaBorrar } = useContextoApp();
+    const { bearer, compruebaErrorSesion, excepcionSesion, handleCerrarModalDeleteTarea, miscolumnas, user, setNombrePantalla, idtareaBorrar, server_url } = useContextoApp();
     setNombrePantalla('Kanban de tareas')
     const [columnas, setColumnas] = useState([]);
 
     const cargaTareas = async () => {
         // Hacemos la solicitud al servidor
         try {
-            const response = await fetch("http://localhost:4000/tareas/" + user.idusuario,
+            const response = await fetch(`${server_url}/tareas/${user.idusuario}`,
                 {
                     method: "GET",
                     headers: { 'Authorization': bearer },
@@ -57,7 +57,7 @@ const KanbanTareas = () => {
         try {
             // Hacemos la solicitud al servidor
             const response = await fetch(
-                "http://localhost:4000/tareas/ordenestado/" + idtarea,
+                `${server_url}/tareas/ordenestado/${idtarea}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json", 'Authorization': bearer },
@@ -116,7 +116,7 @@ const KanbanTareas = () => {
     const confirmarBorrarTareaClicked = async () => {
         try {
             // Hacemos la solicitud al servidor
-            const response = await fetch(`http://localhost:4000/tareas/${idtareaBorrar}`, {
+            const response = await fetch(`${server_url}/tareas/${idtareaBorrar}`, {
                 method: "DELETE",
                 headers: { 'Authorization': bearer },
                 credentials: 'same-origin',

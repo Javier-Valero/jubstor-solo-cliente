@@ -4,7 +4,7 @@ import ConfirmarBorrar from './ConfirmarBorrar';
 import { Box, Button, CircularProgress, FormControl, Grid, Icon, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 
 const Usuario = () => {
-    const { bearer, setNombrePantalla, compruebaErrorSesion, excepcionSesion, handleAbrirModalDeleteUser, handleCerrarModalDeleteUser, navigate, user, setAuth } = useContextoApp();
+    const { bearer, setNombrePantalla, compruebaErrorSesion, excepcionSesion, handleAbrirModalDeleteUser, handleCerrarModalDeleteUser, navigate, user, setAuth, server_url } = useContextoApp();
     setNombrePantalla('Editar perfil usuario')
     const [usuario, setUsuario] = useState(user);
     const [password, setPassword] = useState({
@@ -53,7 +53,7 @@ const Usuario = () => {
         // Hacemos la solicitud al servidor
         try {
             const response = await fetch(
-                "http://localhost:4000/usuarios/" + user.idusuario,
+                `${server_url}/usuarios/${user.idusuario}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json", 'Authorization': bearer },
@@ -87,7 +87,7 @@ const Usuario = () => {
         if (sonDiferentes(password)) {
             try {
                 const response = await fetch(
-                    "http://localhost:4000/usuarios/password/" + user.idusuario,
+                    `${server_url}/usuarios/password/${user.idusuario}`,
                     {
                         method: "PUT",
                         headers: { "Content-Type": "application/json", 'Authorization': bearer },
@@ -116,9 +116,8 @@ const Usuario = () => {
 
     const confirmarBorrarUsuarioClicked = async () => {
         // Hacemos la solicitud al servidor
-        console.log('llego')
         try {
-            const response = await fetch(`http://localhost:4000/usuarios/${user.idusuario}`, {
+            const response = await fetch(`${server_url}/usuarios/${user.idusuario}`, {
                 method: "DELETE",
                 headers: { 'Authorization': bearer },
                 credentials: 'same-origin',
