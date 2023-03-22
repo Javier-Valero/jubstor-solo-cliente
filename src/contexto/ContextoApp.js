@@ -6,6 +6,7 @@ import useAuth from '../hooks/useAuth';
 const ContextoApp = createContext({});
 
 export const AppProvider = ({ children }) => {
+    const server_url = process.env.REACT_APP_SERVERURL
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -73,6 +74,7 @@ export const AppProvider = ({ children }) => {
 
     return (
         <ContextoApp.Provider value={{
+            server_url,
             nombrePantalla, setNombrePantalla,
             compruebaErrorSesion, excepcionSesion,
             bearer,
